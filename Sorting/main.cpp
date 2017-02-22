@@ -18,6 +18,28 @@ using namespace std;
 // compiler C++11 ondersteuning: voeg -std=c++11 toe als option
 
 template<typename T>
+void shellsort(vector<T> &v) {
+    // originele incrementen van Shell (n/2, n/4, ..., 1)
+    int k = v.size() / 2;
+    // start met grootste increment, ga door tot k = 1
+    while (k >= 1) {
+        // insertion sort voor k
+        // eerste elementen v[0..k-1] staan al in volgorde
+        for (int i = k; i < v.size(); i++) {
+            T h = move(v[i]);
+            int j = i - k;
+            while (j >= 0 && h < v[j]) {
+                v[j + k] = move(v[j]);
+                j -= k;
+            }
+            v[j + k] = move(h);
+        }
+        // volgend increment
+        k /= 2;
+    }
+}
+
+template<typename T>
 void insertion_sort(vector<T> &v) {
     for (int i = 1; i < v.size(); i++) {
         // v[i] toegewezen aan h, v[i] is nu leeg
@@ -27,17 +49,18 @@ void insertion_sort(vector<T> &v) {
         while (j >= 0 && h < v[j]) {
             // als h kleiner is dan v[j], schuif v[j] 1 plaats naar rechts
             // in v, v[j] is nu leeg
-            v[j+1] = move(v[j]);
+            v[j + 1] = move(v[j]);
             j--;
         }
         // plaats h terug in v op achtergelaten plaats
-        v[j+1] = move(h);
+        v[j + 1] = move(h);
     }
 }
 
 int main() {
     vector<int> v = {8, 5, 3, 9, 1, 15, 2};
-    insertion_sort(v);
+    //insertion_sort(v);
+    shellsort(v);
     for (int i = 0; i < v.size(); i++) {
         cout << v[i] << " ";
     }
