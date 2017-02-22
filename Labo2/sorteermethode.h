@@ -32,7 +32,7 @@ class Sorteermethode{
 /// geldig is.
 void meet(int kortste, int langste, ostream& os);
 
-
+    
 
 };
 
