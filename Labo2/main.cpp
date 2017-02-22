@@ -35,7 +35,7 @@ int main() {
     
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
     
-    insertion_sort.meet(10,1000000,cout);
+    insertion_sort.meet(10,100000,cout);
     
     return 0;
 }
