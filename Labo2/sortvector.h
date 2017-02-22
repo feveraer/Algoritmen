@@ -53,8 +53,6 @@ public:
 
 private:
     void schrijf(ostream & os)const;
-    vector<T> v;
-    int n;
 
 };
 
@@ -67,31 +65,31 @@ void Sortvector<T>::schrijf(ostream & os)const {
 }
 
 template <class T>
-Sortvector<T>::Sortvector(int n) {
+Sortvector<T>::Sortvector(int n):vector<T>(n) {
     // het argument geeft de grootte aan
     // bij constructie zal de tabel opgevuld worden met
     // n verschillende Ts in random volgorde
     // (zie hulplidfuncties)
 
-    this->n = n;
+    // vector geïnitialiseerd met grootte n
 }
 
 template <class T>
 void Sortvector<T>::vul_range() {
-    for (int i = 0; i < n; i++) {
-        v.push_back(i);
+    for (int i = 0; i < this->size(); i++) {
+        (*this)[i] = T(i);
     }
 }
 
 template <class T>
 void Sortvector<T>::draai_om() {
-    std::reverse(v.begin(), v.end());
+    std::reverse(this->begin(), this->end());
 }
 
 template <class T>
 void Sortvector<T>::vul_omgekeerd() {
-    for (int i = n - 1; i >= 0; i--) {
-        v.push_back(i);
+    for (int i = this->size() - 1; i >= 0; i--) {
+        (*this)[i] = T(i);
     }
 }
 
@@ -106,9 +104,8 @@ void Sortvector<T>::vul_omgekeerd() {
  */
 template <class T>
 void Sortvector<T>::shuffle() {
-    int n = v.size();
-    for (int i = n - 1; i > 0; --i) {
-        std::swap(v[i], v[rand() % (i + 1)]);
+    for (int i = this->size() - 1; i > 0; --i) {
+        std::swap((*this)[i], (*this)[rand() % (i + 1)]);
     }
 }
 
@@ -120,8 +117,8 @@ void Sortvector<T>::vul_random_zonder_dubbels() {
 
 template <class T>
 bool Sortvector<T>::is_gesorteerd() const {
-    for (int i = 1; i < n; i++) {
-        if (v[i-1] > v[i]) {
+    for (int i = 1; i < this->size(); i++) {
+        if ((*this)[i-1] > (*this)[i]) {
             return false;
         }
     }
@@ -130,8 +127,8 @@ bool Sortvector<T>::is_gesorteerd() const {
 
 template <class T>
 bool Sortvector<T>::is_range() const {
-    for (int i = 0; i < n; i++) {
-        if (v[i] != i) {
+    for (int i = 0; i < this->size(); i++) {
+        if ((*this)[i] != i) {
             return false;
         }
     }

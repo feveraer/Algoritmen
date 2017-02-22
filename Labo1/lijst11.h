@@ -227,6 +227,7 @@ void Lijst<T>::voegToe(const T& sl) {
     // nieuwe Lijstknoopptr die knoop met sleutel sl aanmaakt
     Lijstknoopptr<T> nieuw(new Lijstknoop<T>(sl));
 
+    // wisselt nieuw->volgend om met huidige lijst (this)
     Lijstknoopptr<T>::swap(nieuw->volgend);
 
     // nieuw is nu eigenaar van alle resources
