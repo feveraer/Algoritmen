@@ -1,4 +1,6 @@
-//C++11-compatibele lijst. Ontbrekende elementen: move en copy, iterator
+// C++11-compatibele lijst:
+// ontbrekende elementen: move en copy, iterator.
+// compiler C++11 ondersteuning: voeg -std=c++11 toe als option
 #ifndef __LIJST11_H
 #define __LIJST11_H
 //

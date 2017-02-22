@@ -15,13 +15,15 @@
 
 using namespace std;
 
+// compiler C++11 ondersteuning: voeg -std=c++11 toe als option
+
 template<typename T>
 void insertion_sort(vector<T> &v) {
     for (int i = 1; i < v.size(); i++) {
         // v[i] toegewezen aan h, v[i] is nu leeg
         T h = move(v[i]);
         int j = i - 1;
-        // itereer over alle waarden links van h (v[i])
+        // itereer over alle waarden links van h (= v[i])
         while (j >= 0 && h < v[j]) {
             // als h kleiner is dan v[j], schuif v[j] 1 plaats naar rechts
             // in v, v[j] is nu leeg
