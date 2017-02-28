@@ -17,6 +17,15 @@ using namespace std;
 
 // compiler C++11 ondersteuning: voeg -std=c++11 toe als option
 
+/**
+ * Selection sort:
+ * - best case:     O(n²)
+ * - average case:  O(n²)
+ * - worst case:    O(n²)
+ * - is not stable
+ * - rarely used, unless number of swaps need to be low
+ * @param v
+ */
 template<typename T>
 void selection_sort(vector<T> &v) {
     for (int i = v.size() - 1; i > 0; i--) {
@@ -32,6 +41,14 @@ void selection_sort(vector<T> &v) {
     }
 }
 
+/**
+ * Shellsort:
+ * - best case:     O(n log n)
+ * - average case:  depends on increment sequence: Sedgewick gives O(n^(7/6))
+ * - worst case:    depends: Sedgewick gives O(n^(4/3))
+ * - is not stable
+ * @param v
+ */
 template<typename T>
 void shellsort(vector<T> &v) {
     // originele incrementen van Shell (n/2, n/4, ..., 1)
@@ -54,6 +71,15 @@ void shellsort(vector<T> &v) {
     }
 }
 
+
+/**
+ * Insertion sort:
+ * - best case:     O(n)
+ * - average case:  O(n²)
+ * - worst case:    O(n²)
+ * - is stable
+ * @param v
+ */
 template<typename T>
 void insertion_sort(vector<T> &v) {
     for (int i = 1; i < v.size(); i++) {
@@ -75,8 +101,8 @@ void insertion_sort(vector<T> &v) {
 int main() {
     vector<int> v = {8, 5, 3, 9, 1, 15, 2};
     //insertion_sort(v);
-    //shellsort(v);
-    selection_sort(v);
+    shellsort(v);
+    //selection_sort(v);
     for (int i = 0; i < v.size(); i++) {
         cout << v[i] << " ";
     }
