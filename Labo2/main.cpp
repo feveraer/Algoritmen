@@ -11,32 +11,51 @@
 
 #include <iostream>
 #include <cstdlib>
+#include "intstring.h"
 #include "sortvector.h"
 #include "sorteermethode.h"
 
 using namespace std;
 
-
-
 /*
  * 
  */
 int main() {
+    //Sortvector<IntString> sortvector(50);
     Sortvector<int> sortvector(50);
     sortvector.vul_random_zonder_dubbels();
-    
+
     //cout << "Is range? " << sortvector.is_range() << "\n";
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
-    
-//    STLSort<int> stl_sort;
-//    stl_sort(sortvector);
+
+    //    STLSort<int> stl_sort;
+    //    stl_sort(sortvector);
+    // InsertionSort<IntString> insertion_sort;
+    // insertion_sort(sortvector);
+
     InsertionSort<int> insertion_sort;
     insertion_sort(sortvector);
-    
+
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
-    
-    insertion_sort.meet(10,100000,cout);
-    
+
+    insertion_sort.meet(10, 10000, cout);
+
+    // results with IntStrings:
+    //  length                random  gesorteerd      omgekeerd
+    //        10               0               0               0
+    //       100               0               0               0
+    //      1000            0.03           0.001               0
+    //     10000           2.983           0.004           0.005
+    //    100000         304.686           0.044           0.047
+
+    // results with ints:
+    //  length                random  gesorteerd      omgekeerd
+    //        10               0               0               0
+    //       100               0               0               0
+    //      1000           0.003               0               0
+    //     10000           0.238               0               0
+    //    100000          24.332           0.001           0.002
+
     return 0;
 }
 
