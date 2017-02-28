@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include "heapsort.h"
 
 using namespace std;
 
@@ -101,8 +102,9 @@ void insertion_sort(vector<T> &v) {
 int main() {
     vector<int> v = {8, 5, 3, 9, 1, 15, 2};
     //insertion_sort(v);
-    shellsort(v);
+    //shellsort(v);
     //selection_sort(v);
+    heapsort(v);
     for (int i = 0; i < v.size(); i++) {
         cout << v[i] << " ";
     }
