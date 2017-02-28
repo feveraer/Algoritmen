@@ -38,6 +38,7 @@ int main() {
 
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
 
+    cout << "Insertion sort:\n";
     insertion_sort.meet(10, 10000, cout);
 
     // results with IntStrings:
@@ -56,6 +57,17 @@ int main() {
     //     10000           0.238               0               0
     //    100000          24.332           0.001           0.002
 
+    sortvector.vul_random_zonder_dubbels();
+    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+    
+    ShellSort<int> shellsort;
+    shellsort(sortvector);
+    
+    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+    
+    cout << "Shellsort:\n";
+    shellsort.meet(10, 10000, cout);
+    
     return 0;
 }
 

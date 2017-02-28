@@ -123,4 +123,26 @@ public:
     void operator()(vector<T> & v) const;
 };
 
+template <typename T>
+void ShellSort<T>::operator ()(vector<T>& v) const {
+    // originele incrementen van Shell (n/2, n/4, ..., 1)
+    int k = v.size() / 2;
+    // start met grootste increment, ga door tot k = 1
+    while (k >= 1) {
+        // insertion sort voor k
+        // eerste elementen v[0..k-1] staan al in volgorde
+        for (int i = k; i < v.size(); i++) {
+            T h = move(v[i]);
+            int j = i - k;
+            while (j >= 0 && h < v[j]) {
+                v[j + k] = move(v[j]);
+                j -= k;
+            }
+            v[j + k] = move(h);
+        }
+        // volgend increment
+        k /= 2;
+    }
+}
+
 #endif 
