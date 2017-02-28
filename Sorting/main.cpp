@@ -18,6 +18,21 @@ using namespace std;
 // compiler C++11 ondersteuning: voeg -std=c++11 toe als option
 
 template<typename T>
+void selection_sort(vector<T> &v) {
+    for (int i = v.size() - 1; i > 0; i--) {
+        // zoek plaats van maximum
+        int imax = i;
+        for (int j = 0; j < i; j++) {
+            if (v[j] > v[imax]) {
+                imax = j;
+            }
+        }
+        // wissel maximum om met huidige positie in iteratie
+        swap(v[i], v[imax]);
+    }
+}
+
+template<typename T>
 void shellsort(vector<T> &v) {
     // originele incrementen van Shell (n/2, n/4, ..., 1)
     int k = v.size() / 2;
@@ -60,7 +75,8 @@ void insertion_sort(vector<T> &v) {
 int main() {
     vector<int> v = {8, 5, 3, 9, 1, 15, 2};
     //insertion_sort(v);
-    shellsort(v);
+    //shellsort(v);
+    selection_sort(v);
     for (int i = 0; i < v.size(); i++) {
         cout << v[i] << " ";
     }
