@@ -17,6 +17,7 @@ public:
     IntString(int a = 0) : string("0000000000") {
         int modulo = 1000000000;
         for (int i = 0; i < 10; i++) {
+            // ascii value for '0' + number
             this->operator[](i) = '0' + a / modulo;
             a = a % modulo;
             modulo /= 10;
