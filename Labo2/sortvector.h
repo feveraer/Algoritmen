@@ -105,7 +105,9 @@ void Sortvector<T>::vul_omgekeerd() {
 template <class T>
 void Sortvector<T>::shuffle() {
     for (int i = this->size() - 1; i > 0; --i) {
-        std::swap((*this)[i], (*this)[rand() % (i + 1)]);
+        int r1 = rand();
+        int r2 = rand();
+        std::swap((*this)[i], (*this)[(r1 + RAND_MAX * r2) % (i + 1)]);
     }
 }
 

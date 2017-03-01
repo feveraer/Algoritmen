@@ -28,18 +28,18 @@ int main() {
     //cout << "Is range? " << sortvector.is_range() << "\n";
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
 
-    //    STLSort<int> stl_sort;
-    //    stl_sort(sortvector);
+    STLSort<int> stl_sort;
+    stl_sort(sortvector);
     // InsertionSort<IntString> insertion_sort;
     // insertion_sort(sortvector);
 
-    InsertionSort<int> insertion_sort;
-    insertion_sort(sortvector);
+    //    InsertionSort<int> insertion_sort;
+    //    insertion_sort(sortvector);
 
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
 
-    cout << "Insertion sort:\n";
-    insertion_sort.meet(10, 10000, cout);
+    cout << "STL sort:\n";
+    stl_sort.meet(100, 100000000, cout);
 
     // results with IntStrings:
     //  length                random  gesorteerd      omgekeerd
@@ -57,17 +57,27 @@ int main() {
     //     10000           0.238               0               0
     //    100000          24.332           0.001           0.002
 
-    sortvector.vul_random_zonder_dubbels();
-    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
-    
-    ShellSort<int> shellsort;
-    shellsort(sortvector);
-    
-    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
-    
-    cout << "Shellsort:\n";
-    shellsort.meet(10, 10000, cout);
-    
+    // STL sort results:
+    //      length                random  gesorteerd      omgekeerd
+    //       100               0               0               0
+    //      1000               0               0               0
+    //     10000           0.015               0               0
+    //    100000           0.038           0.016           0.015
+    //   1000000           0.377            0.21           0.214
+    //  10000000           4.231           2.567           2.596
+    // 100000000          48.324          28.754          28.856
+
+    //    sortvector.vul_random_zonder_dubbels();
+    //    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+    //    
+    //    ShellSort<int> shellsort;
+    //    shellsort(sortvector);
+    //    
+    //    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+    //    
+    //    cout << "Shellsort:\n";
+    //    shellsort.meet(10, 10000, cout);
+
     return 0;
 }
 
