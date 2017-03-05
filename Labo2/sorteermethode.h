@@ -156,35 +156,75 @@ private:
     void copy(vector<T> &a, vector<T> &b) const;
 };
 
+/**
+ * Vector v[] bevat alle elementen die te sorteren zijn,
+ * vector h[] is een hulpvector van dezelfde grootte.
+ * @param v te sorteren vector
+ */
 template <typename T>
 void MergeSort<T>::operator()(vector<T>& v) const {
     Sortvector<T> h(v.size());
+    // kopieer vector v[] in vector h[]
     copy(v, h);
+    // sorteer elementen van h[] in v[]
     topdown(h, 0, v.size(), v);
 }
 
+/**
+ * Sorteer gegeven vector v[] gebruik makend van vector h[] als bron.
+ * Merk op dat bij elke recursiestap de richting van de merge wordt afgewisseld,
+ * hierdoor wordt een copy terug stap vermeden.
+ * @param h hulpvector
+ * @param l inclusieve index voor begin vector
+ * @param r exclusieve index voor eind vector
+ * @param v te sorteren vector
+ */
+
 template <typename T>
 void MergeSort<T>::topdown(vector<T>& h, int l, int r, vector<T>& v) const {
+    // laat recursie lopen tot de grootte van vector 1 is (exclusief)
     if (l < r - 1) {
+        // deel de vector, die meer dan 1 element bevat, op in 2
         int m = l + (r - l) / 2; // veiliger dan (l + r) / 2
+        // sorteer beide delen van v[] recursief naar hulpvector h[]
         topdown(v, l, m, h);
         topdown(v, m, r, h);
+        // voeg de delen van h[] samen in v[]
         merge(h, l, m, r, v);
     }
 }
 
+/**
+ * Voeg linkse en rechtse delen van vector v[] samen in vector h[].
+ * Linkerdeel is v[l:m-1], rechterdeel is v[m:r-1],
+ * resultaat is h[l:r-1].
+ * @param v te sorteren vector
+ * @param l inclusieve index begin linkerdeel
+ * @param m exclusieve index eind linkerdeel, inclusieve index begin rechterdeel
+ * @param r exclusieve index eind rechterdeel
+ * @param h bevat resultaat na merge
+ */
 template <typename T>
 void MergeSort<T>::merge(vector<T>& v, int l, int m, int r, vector<T>& h) const {
     int i = l, j = m;
 
     // zolang er elementen zijn in linker of rechter delen
     for (int k = l; k < r; k++) {
-        // als i uit linker deel bestaat en <= j van rechter deel
+        // Zolang index zich bevindt in linkerdeel en het element
+        // op die index kleiner is dan elementen van het rechter deel.
+        // Opm.: Indien j groter of gelijk is aan r, wilt dit zeggen
+        // dat voor deze iteratiestap sowieso een element uit linkerdeel
+        // gebruikt zal worden voor de merge, want het rechterdeel bevat geen
+        // elementen meer om te mergen.
         if (i < m && (j >= r || v[i] <= v[j])) {
-            h[k] = v[i];
+            // kies element uit linkerdeel om te mergen
+            h[k] = move(v[i]);
+            // verhoog index voor linkerdeel
             i++;
         } else {
-            h[k] = v[j];
+            // kies element uit rechterdeel om te mergen
+            h[k] = move(v[j]);
+            // verhoog index voor rechterdeel
             j++;
         }
     }
