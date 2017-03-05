@@ -22,24 +22,24 @@ using namespace std;
  */
 int main() {
     //Sortvector<IntString> sortvector(50);
-    Sortvector<int> sortvector(50);
-    sortvector.vul_random_zonder_dubbels();
+//    Sortvector<int> sortvector(50);
+//    sortvector.vul_random_zonder_dubbels();
 
     //cout << "Is range? " << sortvector.is_range() << "\n";
-    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+//    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
 
-    STLSort<int> stl_sort;
-    stl_sort(sortvector);
+//    STLSort<int> stl_sort;
+//    stl_sort(sortvector);
     // InsertionSort<IntString> insertion_sort;
     // insertion_sort(sortvector);
 
     //    InsertionSort<int> insertion_sort;
     //    insertion_sort(sortvector);
 
-    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
-
-    cout << "STL sort:\n";
-    stl_sort.meet(100, 100000000, cout);
+//    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+//
+//    cout << "STL sort:\n";
+//    stl_sort.meet(100, 100000000, cout);
 
     // results with IntStrings:
     //  length                random  gesorteerd      omgekeerd
@@ -77,6 +77,19 @@ int main() {
     //    
     //    cout << "Shellsort:\n";
     //    shellsort.meet(10, 10000, cout);
+    
+    Sortvector<int> sortvector(20);
+    sortvector.vul_random_zonder_dubbels();
+    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+    cout << sortvector << std::endl;
+    
+    MergeSort<int> mergesort;
+    mergesort(sortvector);
+    
+    cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
+    cout << sortvector << std::endl;
+    
+    //mergesort.meet(10, 1000000, cout);
 
     return 0;
 }

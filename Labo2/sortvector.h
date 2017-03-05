@@ -77,6 +77,7 @@ Sortvector<T>::Sortvector(int n):vector<T>(n) {
 template <class T>
 void Sortvector<T>::vul_range() {
     for (int i = 0; i < this->size(); i++) {
+        // move operator called, want compiler ziet T(i) als r-value
         (*this)[i] = T(i);
     }
 }
@@ -89,6 +90,7 @@ void Sortvector<T>::draai_om() {
 template <class T>
 void Sortvector<T>::vul_omgekeerd() {
     for (int i = this->size() - 1; i >= 0; i--) {
+        // move operator called, want compiler ziet T(i) als r-value
         (*this)[i] = T(i);
     }
 }

@@ -7,7 +7,8 @@ using std::move;
 using std::swap;
 using std::endl;
 using std::cout;
-#include <algorithm>   // voor sort()-methode uit STL
+#include <algorithm>
+#include <deque>   // voor sort()-methode uit STL
 
 /** class Sorteermethode
     \brief abstracte klasse van methodes die een vector sorteren
@@ -41,7 +42,7 @@ public:
                 << std::endl;
 
         // Print results
-        for (int i = kortste; i <= langste; i*=10) {
+        for (int i = kortste; i <= langste; i *= 10) {
 
             Sortvector<T> svr(i);
             svr.vul_random_zonder_dubbels();
@@ -124,7 +125,7 @@ public:
 };
 
 template <typename T>
-void ShellSort<T>::operator ()(vector<T>& v) const {
+void ShellSort<T>::operator()(vector<T>& v) const {
     // originele incrementen van Shell (n/2, n/4, ..., 1)
     int k = v.size() / 2;
     // start met grootste increment, ga door tot k = 1
@@ -142,6 +143,59 @@ void ShellSort<T>::operator ()(vector<T>& v) const {
         }
         // volgend increment
         k /= 2;
+    }
+}
+
+template <typename T>
+class MergeSort : public Sorteermethode<T> {
+public:
+    void operator()(vector<T> &v) const;
+private:
+    void topdown(vector<T> &v, int l, int r, vector<T> &h) const;
+    void merge(vector<T> &v, int l, int m, int r, vector<T> &h) const;
+    void copy(vector<T> &a, vector<T> &b) const;
+};
+
+template <typename T>
+void MergeSort<T>::operator()(vector<T>& v) const {
+    Sortvector<T> h(v.size());
+    copy(v, h);
+    topdown(h, 0, v.size(), v);
+}
+
+template <typename T>
+void MergeSort<T>::topdown(vector<T>& h, int l, int r, vector<T>& v) const {
+    if (l < r - 1) {
+        int m = l + (r - l) / 2; // veiliger dan (l + r) / 2
+        topdown(v, l, m, h);
+        topdown(v, m, r, h);
+        merge(h, l, m, r, v);
+    }
+}
+
+template <typename T>
+void MergeSort<T>::merge(vector<T>& v, int l, int m, int r, vector<T>& h) const {
+    int i = l, j = m;
+
+    // zolang er elementen zijn in linker of rechter delen
+    for (int k = l; k < r; k++) {
+        // als i uit linker deel bestaat en <= j van rechter deel
+        if (i < m && (j >= r || v[i] <= v[j])) {
+            h[k] = v[i];
+            i++;
+        } else {
+            h[k] = v[j];
+            j++;
+        }
+    }
+}
+
+template <typename T>
+void MergeSort<T>::copy(vector<T>& a, vector<T>& b) const {
+    if (a.size() == b.size()) {
+        for (int i = 0; i < a.size(); i++) {
+            b[i] = a[i];
+        }
     }
 }
 
