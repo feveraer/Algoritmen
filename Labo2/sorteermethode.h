@@ -151,7 +151,7 @@ class MergeSort : public Sorteermethode<T> {
 public:
     void operator()(vector<T> &v) const;
 private:
-    void topdown(vector<T> &v, int l, int r, vector<T> &h) const;
+    void topdown(vector<T> &h, int l, int r, vector<T> &v) const;
     void merge(vector<T> &v, int l, int m, int r, vector<T> &h) const;
     void copy(vector<T> &a, vector<T> &b) const;
 };

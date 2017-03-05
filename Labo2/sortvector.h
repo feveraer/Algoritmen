@@ -45,8 +45,9 @@ public:
     /// \fn is_range controleert of *this eruit ziet als het resultaat van vul_range(), d.w.z.
     /// dat, voor alle i, (*this)[i]==T(i);
     bool is_range() const;
-    
-    int geef_aantal_inversies() const;
+
+    int aantal_inversies() const;
+    int sort_and_count_inversions();
 
     friend ostream& operator<<(ostream& os, const Sortvector<T>& s) {
         s.schrijf(os);
@@ -55,6 +56,9 @@ public:
 
 private:
     void schrijf(ostream & os)const;
+    int topdown_split_and_count(Sortvector<T> &h, int l, int r, Sortvector<T> &v) const;
+    int merge_and_count(Sortvector<T> &v, int l, int m, int r, Sortvector<T> &h) const;
+    void copy(Sortvector<T> &a, Sortvector<T> &b) const;
 
 };
 
@@ -67,7 +71,7 @@ void Sortvector<T>::schrijf(ostream & os)const {
 }
 
 template <class T>
-Sortvector<T>::Sortvector(int n):vector<T>(n) {
+Sortvector<T>::Sortvector(int n) : vector<T>(n) {
     // het argument geeft de grootte aan
     // bij constructie zal de tabel opgevuld worden met
     // n verschillende Ts in random volgorde
@@ -124,7 +128,7 @@ void Sortvector<T>::vul_random_zonder_dubbels() {
 template <class T>
 bool Sortvector<T>::is_gesorteerd() const {
     for (int i = 1; i < this->size(); i++) {
-        if ((*this)[i-1] > (*this)[i]) {
+        if ((*this)[i - 1] > (*this)[i]) {
             return false;
         }
     }
@@ -141,11 +145,12 @@ bool Sortvector<T>::is_range() const {
     return true;
 }
 
-// Naïeve implementatie: O(n²)
+// Naïeve implementatie: O(n²).
 // Voor elk element, tel aantal elementen die rechts ervan liggen en kleiner zijn,
 // geef totaal terug.
+
 template <class T>
-int Sortvector<T>::geef_aantal_inversies() const {
+int Sortvector<T>::aantal_inversies() const {
     int aantal_inv = 0;
     for (int i = 0; i < this->size() - 1; i++) {
         for (int j = i + 1; j < this->size(); j++) {
@@ -155,6 +160,62 @@ int Sortvector<T>::geef_aantal_inversies() const {
         }
     }
     return aantal_inv;
+}
+
+// Verdeel-en-heers implementatie: O(n log(n)).
+// Opm.: methode niet const, want vector van huidig object dient
+// gemanipuleerd te worden.
+
+template <class T>
+int Sortvector<T>::sort_and_count_inversions() {
+    Sortvector<T> h(this->size());
+    copy(*this, h);
+    return topdown_split_and_count(h, 0, this->size(), *this);
+}
+
+template <class T>
+int Sortvector<T>::topdown_split_and_count(Sortvector<T>& h, int l, int r, Sortvector<T>& v) const {
+    if (l < r - 1) {
+        int m = l + (r - l) / 2;
+        int x = topdown_split_and_count(v, l, m, h);
+        int y = topdown_split_and_count(v, m, r, h);
+        int z = merge_and_count(h, l, m, r, v);
+        return x + y + z;
+    } else {
+        return 0;
+    }
+}
+
+template <class T>
+int Sortvector<T>::merge_and_count(Sortvector<T>& v, int l, int m, int r, Sortvector<T>& h) const {
+    int i = l, j = m, inv_count = 0;
+
+    // zolang er elementen zijn in linker of rechter delen
+    for (int k = l; k < r; k++) {
+        // als i uit linker deel bestaat en <= j van rechter deel
+        if (i < m && (j >= r || v[i] <= v[j])) {
+            h[k] = v[i];
+            i++;
+        } else {
+            h[k] = v[j];
+            j++;
+            // elke keer element uit rechter deel kleiner blijkt
+            // dan alle overblijvende elementen uit linker, verhoog
+            // aantal inversies teller met aantal overblijvende elementen
+            // uit linker deel
+            inv_count += (m - i);
+        }
+    }
+    return inv_count;
+}
+
+template <class T>
+void Sortvector<T>::copy(Sortvector<T>& a, Sortvector<T>& b) const {
+    if (a.size() == b.size()) {
+        for (int i = 0; i < a.size(); i++) {
+            b[i] = a[i];
+        }
+    }
 }
 
 #endif
