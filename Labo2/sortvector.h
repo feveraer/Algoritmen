@@ -45,6 +45,8 @@ public:
     /// \fn is_range controleert of *this eruit ziet als het resultaat van vul_range(), d.w.z.
     /// dat, voor alle i, (*this)[i]==T(i);
     bool is_range() const;
+    
+    int geef_aantal_inversies() const;
 
     friend ostream& operator<<(ostream& os, const Sortvector<T>& s) {
         s.schrijf(os);
@@ -137,6 +139,22 @@ bool Sortvector<T>::is_range() const {
         }
     }
     return true;
+}
+
+// Naïeve implementatie: O(n²)
+// Voor elk element, tel aantal elementen die rechts ervan liggen en kleiner zijn,
+// geef totaal terug.
+template <class T>
+int Sortvector<T>::geef_aantal_inversies() const {
+    int aantal_inv = 0;
+    for (int i = 0; i < this->size() - 1; i++) {
+        for (int j = i + 1; j < this->size(); j++) {
+            if ((*this)[i] > (*this)[j]) {
+                aantal_inv++;
+            }
+        }
+    }
+    return aantal_inv;
 }
 
 #endif

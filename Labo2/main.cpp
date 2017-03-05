@@ -83,6 +83,8 @@ int main() {
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
     cout << sortvector << std::endl;
     
+    cout << "Aantal inversies: " << sortvector.geef_aantal_inversies() << std::endl;
+    
     MergeSort<int> mergesort;
     mergesort(sortvector);
     
