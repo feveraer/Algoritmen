@@ -9,6 +9,7 @@ using std::endl;
 using std::cout;
 #include <algorithm>
 #include <deque>   // voor sort()-methode uit STL
+#include "csv.h"
 
 /** class Sorteermethode
     \brief abstracte klasse van methodes die een vector sorteren
@@ -77,6 +78,45 @@ public:
 
     }
 
+    void meet(int kortste, int langste, CsvData & csv) {
+
+        vector<double> csv_data_vector;
+
+        // Print results
+        for (int i = kortste; i <= langste; i *= 10) {
+
+            Sortvector<T> svr(i);
+            svr.vul_random_zonder_dubbels();
+
+            Sortvector<T> svg(i);
+            svg.vul_range();
+
+            Sortvector<T> svo(i);
+            svo.vul_omgekeerd();
+
+            Chrono cr;
+            cr.start();
+            (*this)(svr);
+            cr.stop();
+
+            Chrono cr2;
+            cr2.start();
+            (*this)(svg);
+            cr2.stop();
+
+            Chrono cr3;
+            cr3.start();
+            (*this)(svo);
+            cr3.stop();
+
+            csv_data_vector.push_back(i);
+            //            tijden.push_back(cr.tijd());
+            //            tijden.push_back(cr2.tijd());
+            //            tijden.push_back(cr3.tijd());
+        }
+
+        csv.voegDataToe(csv_data_vector);
+    }
 };
 
 /** \class STLSort

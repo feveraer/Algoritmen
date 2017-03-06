@@ -92,7 +92,8 @@ int main() {
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
     cout << sortvector << std::endl;
 
-    //mergesort.meet(10, 1000000, cout);
+    CsvData csv("labo2", ';');
+    mergesort.meet(10, 1000000, csv);
 
     return 0;
 }
