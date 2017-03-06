@@ -83,17 +83,14 @@ int main() {
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
     cout << sortvector << std::endl;
 
-    //cout << "Aantal inversies: " << sortvector.aantal_inversies() << std::endl;
-    //cout << "Aantal inversies (mergesort): " << sortvector.sort_and_count_inversions() << std::endl;
-
-    MergeSort<int> mergesort;
-    mergesort(sortvector);
+    cout << "Aantal inversies: " << sortvector.aantal_inversies() << std::endl;
+    cout << "Aantal inversies (mergesort): " << sortvector.sort_and_count_inversions() << std::endl;
     
     cout << "Is gesorteerd? " << sortvector.is_gesorteerd() << "\n";
     cout << sortvector << std::endl;
 
-    CsvData csv("labo2", ';');
-    mergesort.meet(10, 1000000, csv);
+//    CsvData csv("labo2", ';');
+//    mergesort.meet(10, 1000000, csv);
 
     return 0;
 }
