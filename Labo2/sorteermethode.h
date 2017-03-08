@@ -80,8 +80,11 @@ public:
 
     void meet(int kortste, int langste, CsvData & csv) {
 
-        vector<double> csv_data_vector;
-
+        vector<double> csv_data_k1;
+        vector<double> csv_data_k2;
+        vector<double> csv_data_k3;
+        vector<double> csv_data_k4;
+        
         // Print results
         for (int i = kortste; i <= langste; i *= 10) {
 
@@ -109,13 +112,16 @@ public:
             (*this)(svo);
             cr3.stop();
 
-            csv_data_vector.push_back(i);
-            //            tijden.push_back(cr.tijd());
-            //            tijden.push_back(cr2.tijd());
-            //            tijden.push_back(cr3.tijd());
+            csv_data_k1.push_back(i);
+            csv_data_k2.push_back(cr.tijd());
+            csv_data_k3.push_back(cr2.tijd());
+            csv_data_k4.push_back(cr3.tijd());
         }
 
-        csv.voegDataToe(csv_data_vector);
+        csv.voegDataToe(csv_data_k1);
+        csv.voegDataToe(csv_data_k2);
+        csv.voegDataToe(csv_data_k3);
+        csv.voegDataToe(csv_data_k4);
     }
 };
 
