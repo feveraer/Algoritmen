@@ -21,6 +21,7 @@ using namespace std;
  * 
  */
 int main() {
+    srand(time(0));
     //Sortvector<IntString> sortvector(50);
     //    Sortvector<int> sortvector(50);
     //    sortvector.vul_random_zonder_dubbels();

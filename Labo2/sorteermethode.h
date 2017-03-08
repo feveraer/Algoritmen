@@ -191,7 +191,7 @@ class MergeSort : public Sorteermethode<T> {
 public:
     void operator()(vector<T> &v) const;
 private:
-    void topdown(vector<T> &h, int l, int r, vector<T> &v) const;
+    void mergesort(vector<T> &h, int l, int r, vector<T> &v, bool resultInV) const;
     void merge(vector<T> &v, int l, int m, int r, vector<T> &h) const;
 };
 
@@ -203,9 +203,16 @@ private:
 template <typename T>
 void MergeSort<T>::operator()(vector<T>& v) const {
     // kopieer vector v[] in vector h[]
-    vector<T> h(v);
+    // vector<T> h(v);
+
+    // zonder kopiëren van v[] naar h[]
+    vector<T> h(v.size(), -1);
+
     // sorteer elementen van h[] in v[]
-    topdown(h, 0, v.size(), v);
+    mergesort(h, 0, v.size(), v, true);
+    //    for (auto &&t : h) {
+    //        cout << t << " ";
+    //    }
 }
 
 /**
@@ -216,19 +223,29 @@ void MergeSort<T>::operator()(vector<T>& v) const {
  * @param l inclusieve index voor begin vector
  * @param r exclusieve index voor eind vector
  * @param v te sorteren vector
+ * @param resultInV indien true, stelt dat het resultaat van sorteren in v[] terecht komt
  */
-
 template <typename T>
-void MergeSort<T>::topdown(vector<T>& h, int l, int r, vector<T>& v) const {
+void MergeSort<T>::mergesort(vector<T>& h, int l, int r, vector<T>& v, bool resultInV) const {
     // laat recursie lopen tot de grootte van vector 1 is (exclusief)
     if (l < r - 1) {
         // deel de vector, die meer dan 1 element bevat, op in 2
         int m = l + (r - l) / 2; // veiliger dan (l + r) / 2
         // sorteer beide delen van v[] recursief naar hulpvector h[]
-        topdown(v, l, m, h);
-        topdown(v, m, r, h);
+        mergesort(h, l, m, v, !resultInV);
+        mergesort(h, m, r, v, !resultInV);
         // voeg de delen van h[] samen in v[]
-        merge(h, l, m, r, v);
+        if (!resultInV) {
+            merge(v, l, m, r, h);
+        } else {
+            merge(h, l, m, r, v);
+        }
+    } else if (l == r - 1) { // als te sorteren vector grootte 1 is
+        // verplaats element op index l van v[] naar h[],
+        // indien resultaat van sorteren in hulpvector komt
+        if (!resultInV) {
+            h[l] = move(v[l]);
+        }
     }
 }
 
