@@ -56,9 +56,8 @@ public:
 
 private:
     void schrijf(ostream & os)const;
-    int topdown_split_and_count(Sortvector<T> &h, int l, int r, Sortvector<T> &v) const;
+    int topdown_split_and_count(Sortvector<T> &h, int l, int r, Sortvector<T> &v, bool resultInV) const;
     int merge_and_count(Sortvector<T> &v, int l, int m, int r, Sortvector<T> &h) const;
-    void copy(Sortvector<T> &a, Sortvector<T> &b) const;
 
 };
 
@@ -169,18 +168,28 @@ int Sortvector<T>::aantal_inversies() const {
 template <class T>
 int Sortvector<T>::sort_and_count_inversions() {
     Sortvector<T> h(this->size());
-    copy(*this, h);
-    return topdown_split_and_count(h, 0, this->size(), *this);
+    return topdown_split_and_count(h, 0, this->size(), *this, true);
 }
 
 template <class T>
-int Sortvector<T>::topdown_split_and_count(Sortvector<T>& h, int l, int r, Sortvector<T>& v) const {
+int Sortvector<T>::topdown_split_and_count(Sortvector<T>& h, int l, int r, Sortvector<T>& v,
+        bool resultInV) const {
     if (l < r - 1) {
         int m = l + (r - l) / 2;
-        int x = topdown_split_and_count(v, l, m, h);
-        int y = topdown_split_and_count(v, m, r, h);
-        int z = merge_and_count(h, l, m, r, v);
+        int x = topdown_split_and_count(h, l, m, v, !resultInV);
+        int y = topdown_split_and_count(h, m, r, v, !resultInV);
+        int z;
+        if (!resultInV) {
+            z = merge_and_count(v, l, m, r, h);
+        } else {
+            z = merge_and_count(h, l, m, r, v);
+        }
         return x + y + z;
+    } else if (l == r - 1) {
+        if (!resultInV) {
+            h[l] = move(v[l]);
+        }
+        return 0;
     } else {
         return 0;
     }
@@ -207,15 +216,6 @@ int Sortvector<T>::merge_and_count(Sortvector<T>& v, int l, int m, int r, Sortve
         }
     }
     return inv_count;
-}
-
-template <class T>
-void Sortvector<T>::copy(Sortvector<T>& a, Sortvector<T>& b) const {
-    if (a.size() == b.size()) {
-        for (int i = 0; i < a.size(); i++) {
-            b[i] = a[i];
-        }
-    }
 }
 
 #endif
