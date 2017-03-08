@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>heapsort.h</itemPath>
+      <itemPath>quicksort.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -37,12 +38,18 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>build</pElem>
+          </incDir>
           <commandLine>-std=c++11</commandLine>
         </ccTool>
       </compileType>
       <item path="heapsort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="quicksort.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -68,6 +75,8 @@
       <item path="heapsort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="quicksort.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

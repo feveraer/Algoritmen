@@ -13,6 +13,7 @@
 #include <vector>
 #include <iostream>
 #include "heapsort.h"
+#include "quicksort.h"
 
 using namespace std;
 
@@ -104,7 +105,8 @@ int main() {
     //insertion_sort(v);
     //shellsort(v);
     //selection_sort(v);
-    heapsort(v);
+    //heapsort(v);
+    quicksort(v);
     for (int i = 0; i < v.size(); i++) {
         cout << v[i] << " ";
     }
