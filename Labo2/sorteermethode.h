@@ -193,7 +193,6 @@ public:
 private:
     void topdown(vector<T> &h, int l, int r, vector<T> &v) const;
     void merge(vector<T> &v, int l, int m, int r, vector<T> &h) const;
-    void copy(vector<T> &a, vector<T> &b) const;
 };
 
 /**
@@ -203,9 +202,8 @@ private:
  */
 template <typename T>
 void MergeSort<T>::operator()(vector<T>& v) const {
-    Sortvector<T> h(v.size());
     // kopieer vector v[] in vector h[]
-    copy(v, h);
+    vector<T> h(v);
     // sorteer elementen van h[] in v[]
     topdown(h, 0, v.size(), v);
 }
@@ -266,15 +264,6 @@ void MergeSort<T>::merge(vector<T>& v, int l, int m, int r, vector<T>& h) const 
             h[k] = move(v[j]);
             // verhoog index voor rechterdeel
             j++;
-        }
-    }
-}
-
-template <typename T>
-void MergeSort<T>::copy(vector<T>& a, vector<T>& b) const {
-    if (a.size() == b.size()) {
-        for (int i = 0; i < a.size(); i++) {
-            b[i] = a[i];
         }
     }
 }
