@@ -42,6 +42,9 @@ int main(int argc, char** argv) {
     int max_number_groups_anagrams = number_groups_anagrams;
     string s_anagram = anagram_pairs[0].second;
     int pos_max_number_groups_anagrams;
+    
+    int pos_largest_anagram;
+    int max_size_anagram = 0;
     for (int i = 1; i < anagram_pairs.size(); i++) {
         if (anagram_pairs[i].second == s_anagram) {
             number_groups_anagrams++;
@@ -49,6 +52,12 @@ int main(int argc, char** argv) {
                 max_number_groups_anagrams = number_groups_anagrams;
                 pos_max_number_groups_anagrams = i - max_number_groups_anagrams + 1;
             }
+            int size_anagram = anagram_pairs[i].second.size();
+            if (size_anagram > max_size_anagram) {
+                max_size_anagram = size_anagram;
+                pos_largest_anagram = i;
+            }
+            
         } else {
             s_anagram = anagram_pairs[i].second;
             number_groups_anagrams = 1;
@@ -56,7 +65,7 @@ int main(int argc, char** argv) {
     }
 
     // grootste groep
-    
+
     cout << max_number_groups_anagrams << "\n";
 
     for (int i = pos_max_number_groups_anagrams;
@@ -64,7 +73,11 @@ int main(int argc, char** argv) {
             i++) {
         cout << anagram_pairs[i].first << ", " << anagram_pairs[i].second << "\n";
     }
-
+    
+    cout << "Largest anagram\n";
+    
+    cout << max_size_anagram << "\n";
+    cout << anagram_pairs[pos_largest_anagram].second << "\n";
 
     return 0;
 }
