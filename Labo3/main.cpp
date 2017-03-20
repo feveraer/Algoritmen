@@ -15,10 +15,16 @@
 #include <iostream>
 #include <memory>
 #include <algorithm>
+#include <time.h>
+#include <sstream>
 
 using namespace std;
 
 int main(int argc, char** argv) {
+
+    // OEFENING 1: Welke groep anagrammen is het grootst? 
+    // Welke paar anagrammen is het langst?
+
     ifstream in("woordenlijst.txt");
     string word;
 
@@ -37,7 +43,7 @@ int main(int argc, char** argv) {
     int max_number_groups_anagrams = number_groups_anagrams;
     string s_anagram = anagram_pairs[0].first;
     int pos_max_number_groups_anagrams;
-    
+
     int pos_largest_anagram;
     int max_size_anagram = 0;
     for (int i = 1; i < anagram_pairs.size(); i++) {
@@ -52,7 +58,7 @@ int main(int argc, char** argv) {
                 max_size_anagram = size_anagram;
                 pos_largest_anagram = i;
             }
-            
+
         } else {
             s_anagram = anagram_pairs[i].first;
             number_groups_anagrams = 1;
@@ -68,11 +74,44 @@ int main(int argc, char** argv) {
             i++) {
         cout << anagram_pairs[i].first << ", " << anagram_pairs[i].second << "\n";
     }
-    
-    cout << "Largest anagram\n";
-    
+
+    cout << "\nLargest anagram\n";
+
     cout << max_size_anagram << "\n";
     cout << anagram_pairs[pos_largest_anagram].first << "\n";
+
+
+    // OEFENING 2: Verander de tekst door, als er voor een woord in de tekst 
+    // een anagram zit in de woordenlijst, het woord te vervangen door een van de 
+    // anagrammen. Kies elke keer random een vervanging uit de mogelijkheden.
+
+    ifstream in2("TimErwetenKoerst.txt");
+    ofstream output_file;
+    srand(time(NULL));
+    string line;
+
+    output_file.open("TimErwetenKoerst_out.txt");
+    while (getline(in2, line)) {
+        stringstream line_stream(line);
+        string token;
+        while (line_stream >> token) {
+            string s_word = token;
+            sort(s_word.begin(), s_word.end());
+            vector<pair<string, string>>::iterator it =
+                    find_if(anagram_pairs.begin(), anagram_pairs.end(),
+                    [&](pair<string, string> const & ref) {
+                        return ref.first == s_word; });
+            if (it != anagram_pairs.end()) {
+                // cout << it->second << "\n";
+                // choose first anagram associated with found word
+                output_file << it->second << " ";
+            } else {
+                output_file << token << " ";
+            }
+        }
+        output_file << "\n";
+    }
+    output_file.close();
 
     return 0;
 }
