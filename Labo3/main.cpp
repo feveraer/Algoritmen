@@ -80,6 +80,8 @@ int main(int argc, char** argv) {
     cout << max_size_anagram << "\n";
     cout << anagram_pairs[pos_largest_anagram].first << "\n";
 
+    in.close();
+
 
     // OEFENING 2: Verander de tekst door, als er voor een woord in de tekst 
     // een anagram zit in de woordenlijst, het woord te vervangen door een van de 
@@ -93,25 +95,40 @@ int main(int argc, char** argv) {
     output_file.open("TimErwetenKoerst_out.txt");
     while (getline(in2, line)) {
         stringstream line_stream(line);
-        string token;
-        while (line_stream >> token) {
-            string s_word = token;
+        string word;
+        while (line_stream >> word) {
+            string s_word = word;
             sort(s_word.begin(), s_word.end());
-            vector<pair<string, string>>::iterator it =
+            // iterator to first found anagram
+            vector<pair<string, string>>::iterator it_first =
                     find_if(anagram_pairs.begin(), anagram_pairs.end(),
                     [&](pair<string, string> const & ref) {
                         return ref.first == s_word; });
-            if (it != anagram_pairs.end()) {
+            // reverse iterator to last found anagram
+            vector<pair<string, string>>::reverse_iterator it_last =
+                    find_if(anagram_pairs.rbegin(), anagram_pairs.rend(),
+                    [&](pair<string, string> const & ref) {
+                        return ref.first == s_word; });
+            // if anagram found, write random anagram to file
+            if (it_first != anagram_pairs.end()) {
                 // cout << it->second << "\n";
                 // choose first anagram associated with found word
-                output_file << it->second << " ";
+                // output_file << it->second << " ";
+
+                // choose random anagram
+                int lower_bound = it_first - anagram_pairs.begin();
+                int upper_bound = it_last.base() - anagram_pairs.begin();
+                int random_index = lower_bound + (rand() * (upper_bound - lower_bound) / RAND_MAX);
+                output_file << anagram_pairs[random_index].second << " ";
             } else {
-                output_file << token << " ";
+                // anagram not found, write same word to file
+                output_file << word << " ";
             }
         }
         output_file << "\n";
     }
     output_file.close();
+    in2.close();
 
     return 0;
 }
